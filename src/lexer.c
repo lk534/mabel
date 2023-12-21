@@ -1,4 +1,4 @@
-#include <mbl/lex/lexer.h>
+#include <mbl/lexer.h>
 
 token_t *lex_comment (char *src, size_t len, cursor_t *crs) {
     token_t *token = token_init(crs, TK_COM);
@@ -118,6 +118,7 @@ token_t *lex_file(char *src, size_t len) {
         if (!token) {
             syntax_error(src, &crs);
         }
+        printf("token lexed " + token->type);
         if (!head) {
             head = token;
         }

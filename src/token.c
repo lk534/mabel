@@ -1,4 +1,4 @@
-#include <mbl/lex/token.h>
+#include <mbl/token.h>
 
 const char KEYWORDS[][4] = {
     "fun",

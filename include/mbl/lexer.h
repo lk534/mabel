@@ -5,7 +5,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "../logger.h"
+#include "logger.h"
 #include "cursor.h"
 #include "token.h"
 

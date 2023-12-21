@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "lex/cursor.h"
+#include "cursor.h"
 
 void syntax_error (char *src, cursor_t *crs);
 

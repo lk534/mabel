@@ -1,4 +1,4 @@
-#include <mbl/lex/cursor.h>
+#include <mbl/cursor.h>
 
 void cursor_advance (char *src, cursor_t *crs) {
     if (src[crs->pos] == '\n') {
