@@ -1,11 +1,14 @@
-TARGET=mabel
+TARGET	= mabel
+MODULES = lex
+
+############### Make ###############
 CC=gcc
 CFLAGS=-Iinclude -Wall -std=c99 -g
 
-SRC_DIR=src
-OBJ_DIR=obj
+SRC_DIR := $(addprefix src/,$(MODULES)) src
+OBJ_DIR = obj
 
-SRCS=$(wildcard $(SRC_DIR)/*.c)
+SRCS=$(foreach srcdir,$(SRC_DIR),$(wildcard $(srcdir)/*.c))
 OBJS=$(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 
 all: $(TARGET)

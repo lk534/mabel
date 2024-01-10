@@ -1,4 +1,9 @@
-#include <mbl/lexer.h>
+#include <mbl/lex/lexer.h>
+
+void syntax_error (char *src, cursor_t *crs) {
+    printf("[SyntaxError] Unexpected token '%c' (%d) at %d:%d\n", src[crs->pos], src[crs->pos], crs->row, crs->col);
+    exit(1);
+}
 
 token_t *lex_comment (char *src, size_t len, cursor_t *crs) {
     token_t *token = token_init(crs, TK_COM);
@@ -118,7 +123,6 @@ token_t *lex_file(char *src, size_t len) {
         if (!token) {
             syntax_error(src, &crs);
         }
-        printf("token lexed " + token->type);
         if (!head) {
             head = token;
         }

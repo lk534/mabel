@@ -1,14 +1,14 @@
 #include <mbl/io.h>
 
 char *file_read (const char *path, size_t *len) {
-    FILE *file = fopen(path, "r");
+    FILE *file = fopen(path, "rb");
     if (!file) {
         return NULL;
     }
     fseek(file, 0, SEEK_END);
-    *len = ftell(file);
+    *len = (size_t) ftell(file);
     fseek(file, 0, SEEK_SET);
-    char *buf = (char *) malloc(*len+1);
+    char *buf = (char *) malloc((*len)+1);
     if (!buf) {
         fclose(file);
         return NULL;

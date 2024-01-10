@@ -1,4 +1,4 @@
-#include <mbl/lexer.h>
+#include <mbl/lex/lexer.h>
 #include <mbl/io.h>
 
 int main (void) {

@@ -3,11 +3,13 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 #include <ctype.h>
 
-#include "logger.h"
 #include "cursor.h"
 #include "token.h"
+
+void syntax_error (char *src, cursor_t *crs);
 
 token_t *lex_token (char *src, size_t len, cursor_t *crs);
 
