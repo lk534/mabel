@@ -4,8 +4,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-char *file_read (const char *path, size_t *len);
+#include "types.h"
 
-char file_write (const char *path, const char *src, const size_t len);
+string_t file_read (const char *path);
+
+char file_write (const char *path, const string_t str);
 
 #endif

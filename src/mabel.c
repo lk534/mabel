@@ -2,11 +2,10 @@
 #include <mbl/io.h>
 
 int main (void) {
-    size_t len;
-    char *src = file_read("example.mbl", &len);
-    if (!src) {
+    string_t str = file_read("example.mbl");
+    if (!str.src) {
         return 1;
     }
-    lex_file(src, len);
+    lex_file(str.src, str.len);
     return 0;
 }

@@ -8,6 +8,8 @@ typedef struct {
     size_t len;
 } string_t;
 
+extern const string_t nullstr;
+
 typedef unsigned char byte_t;
 
 #endif

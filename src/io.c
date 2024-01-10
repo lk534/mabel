@@ -1,35 +1,36 @@
 #include <mbl/io.h>
 
-char *file_read (const char *path, size_t *len) {
+string_t file_read (const char *path) {
+    string_t str = { NULL, 0 };
     FILE *file = fopen(path, "rb");
     if (!file) {
-        return NULL;
+        return nullstr;
     }
     fseek(file, 0, SEEK_END);
-    *len = (size_t) ftell(file);
+    str.len = (size_t) ftell(file);
     fseek(file, 0, SEEK_SET);
-    char *buf = (char *) malloc((*len)+1);
-    if (!buf) {
+    str.src = (char *) malloc(str.len + 1);
+    if (!str.src) {
         fclose(file);
-        return NULL;
+        return nullstr;
     }
-    size_t read = fread(buf, 1, *len, file);
-    if (read < *len) {
-        free(buf);
+    size_t read = fread(str.src, 1, str.len, file);
+    if (read < str.len) {
+        free(str.src);
         fclose(file);
-        return NULL;
+        return nullstr;
     }
-    buf[*len] = '\0';
+    str.src[str.len] = '\0';
     fclose(file);
-    return buf;
+    return str;
 }
 
-char file_write (const char *path, const char *src, const size_t len) {
+char file_write (const char *path, const string_t str) {
     FILE *file = fopen(path, "w");
     if (!file) {
         return 0;
     }
-    size_t cnt = fwrite(src, 1, len, file);
+    size_t cnt = fwrite(str.src, 1, str.len, file);
     fclose(file);
-    return cnt == len;
+    return cnt == str.len;
 }
