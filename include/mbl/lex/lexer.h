@@ -19,7 +19,7 @@ token_t *lex_alpha (char *src, size_t len, cursor_t *crs);
 
 token_t *lex_digit (char *src, size_t len, cursor_t *crs);
 
-token_t *lex_separator (char *src, size_t len, cursor_t *crs);
+token_t *lex_single (char *src, size_t len, cursor_t *crs);
 
 token_t *lex_file(char *src, size_t len);
 

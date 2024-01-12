@@ -1,7 +1,7 @@
 #include <mbl/lex/lexer.h>
 
 void syntax_error (char *src, cursor_t *crs) {
-    printf("[SyntaxError] Unexpected token '%c' (%d) at %d:%d\n", src[crs->pos], src[crs->pos], crs->row, crs->col);
+    printf("[SyntaxError] Unexpected character '%c' (%d) at %d:%d\n", src[crs->pos], src[crs->pos], crs->row, crs->col);
     exit(1);
 }
 
@@ -19,7 +19,7 @@ token_t *lex_comment (char *src, size_t len, cursor_t *crs) {
 }
 
 token_t *lex_digit (char *src, size_t len, cursor_t *crs) {
-    token_t *token = token_init(crs, LT_INT);
+    token_t *token = token_init(crs, TK_NUM);
 
     // TODO: Support for HEX (0x), BIN (0b), FLOAT.
     do {
@@ -54,33 +54,36 @@ token_t *lex_alpha (char *src, size_t len, cursor_t *crs) {
     if (token->len < kw_size) {
         for (size_t i = 0; i < KEYWORDS_CNT; i++) {
             if (!strncmp(src + token->pos, KEYWORDS[i], token->len)) {
-                token->type = KW_FUN + i;
+                token->type = TK_FUN + i;
             }
         }
     }
     return token;
 }
 
-token_t *lex_separator (char *src, size_t len, cursor_t *crs) {
+token_t *lex_single (char *src, size_t len, cursor_t *crs) {
     toktype_e type;
     switch (src[crs->pos]) {
         case '(':
-            type = SP_LPAREN;
+            type = TK_LPAREN;
             break;
         case ')':
-            type = SP_RPAREN;
+            type = TK_RPAREN;
             break;
         case '{':
-            type = SP_LBRACE;
+            type = TK_LBRACE;
             break;
         case '}':
-            type = SP_RBRACE;
+            type = TK_RBRACE;
             break;
         case ':':
-            type = SP_COLON;
+            type = TK_COLON;
             break;
         case ';':
-            type = SP_SEMI;
+            type = TK_SEMI;
+            break;
+        case '=':
+            type = TK_EQUALS;
             break;
         default:
             return NULL;
@@ -105,7 +108,7 @@ token_t *lex_token (char *src, size_t len, cursor_t *crs) {
         return lex_alpha(src, len, crs);
     }
 
-    return lex_separator(src, len, crs);
+    return lex_single(src, len, crs);
 }
 
 token_t *lex_file(char *src, size_t len) {
@@ -130,6 +133,10 @@ token_t *lex_file(char *src, size_t len) {
             tail->next = token;
         }
         tail = token;
+    }
+
+    if (tail) {
+        tail->next = token_init(&crs, TK_EOF);
     }
 
     return head;

@@ -3,7 +3,8 @@
 const char KEYWORDS[][4] = {
     "fun",
     "ret",
-    "int"
+    "int",
+    "var"
 };
 
 const size_t KEYWORDS_CNT = sizeof(KEYWORDS) / sizeof(KEYWORDS[0]);

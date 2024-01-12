@@ -10,22 +10,27 @@ extern const size_t KEYWORDS_CNT;
 extern const size_t KEYWORDS_SZ;
 
 typedef enum {
+    TK_NUL,
+    TK_EOF,
     // General
     TK_COM,
     TK_IDN,
     // Keywords
-    KW_FUN,
-    KW_RET,
-    KW_INT,
+    TK_FUN,
+    TK_RET,
+    TK_INT,
+    TK_VAR,
     // Literals
-    LT_INT,
+    TK_NUM,
+    // Operators
+    TK_EQUALS,
     // Separators
-    SP_LPAREN,
-    SP_RPAREN,
-    SP_LBRACE,
-    SP_RBRACE,
-    SP_SEMI,
-    SP_COLON
+    TK_LPAREN,
+    TK_RPAREN,
+    TK_LBRACE,
+    TK_RBRACE,
+    TK_SEMI,
+    TK_COLON
 } toktype_e;
 
 typedef struct _token {

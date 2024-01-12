@@ -1,3 +1,4 @@
 fun main () : int {
-    ret 0;
+    var x : int = 0;
+    ret x;
 }
