@@ -31,18 +31,18 @@ typedef enum {
     TK_RBRACE,
     TK_SEMI,
     TK_COLON
-} toktype_e;
+} TokenType;
 
 typedef struct _token {
-    toktype_e type;
+    TokenType type;
     struct _token *next;
     size_t pos;
     size_t row;
     size_t col;
     size_t len;
     int ival;
-} token_t;
+} Token;
 
-token_t *token_init(cursor_t *crs, toktype_e type);
+Token *token_init(Cursor *crs, TokenType type);
 
 #endif

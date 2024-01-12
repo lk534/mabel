@@ -7,8 +7,8 @@ typedef struct {
     size_t pos;
     size_t row;
     size_t col;
-} cursor_t;
+} Cursor;
 
-void cursor_advance (char *src, cursor_t *crs);
+void cursor_advance (char *src, Cursor *crs);
 
 #endif

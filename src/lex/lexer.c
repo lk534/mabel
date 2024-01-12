@@ -1,12 +1,12 @@
 #include <mbl/lex/lexer.h>
 
-void syntax_error (char *src, cursor_t *crs) {
+void syntax_error (char *src, Cursor *crs) {
     printf("[SyntaxError] Unexpected character '%c' (%d) at %d:%d\n", src[crs->pos], src[crs->pos], crs->row, crs->col);
     exit(1);
 }
 
-token_t *lex_comment (char *src, size_t len, cursor_t *crs) {
-    token_t *token = token_init(crs, TK_COM);
+Token *lex_comment (char *src, size_t len, Cursor *crs) {
+    Token *token = token_init(crs, TK_COM);
 
     crs->pos += 2;
 
@@ -18,8 +18,8 @@ token_t *lex_comment (char *src, size_t len, cursor_t *crs) {
     return token;
 }
 
-token_t *lex_digit (char *src, size_t len, cursor_t *crs) {
-    token_t *token = token_init(crs, TK_NUM);
+Token *lex_digit (char *src, size_t len, Cursor *crs) {
+    Token *token = token_init(crs, TK_NUM);
 
     // TODO: Support for HEX (0x), BIN (0b), FLOAT.
     do {
@@ -38,8 +38,8 @@ token_t *lex_digit (char *src, size_t len, cursor_t *crs) {
 }
 
 
-token_t *lex_alpha (char *src, size_t len, cursor_t *crs) {
-    token_t *token = token_init(crs, TK_IDN);
+Token *lex_alpha (char *src, size_t len, Cursor *crs) {
+    Token *token = token_init(crs, TK_IDN);
 
     do {
         crs->pos++;
@@ -55,14 +55,15 @@ token_t *lex_alpha (char *src, size_t len, cursor_t *crs) {
         for (size_t i = 0; i < KEYWORDS_CNT; i++) {
             if (!strncmp(src + token->pos, KEYWORDS[i], token->len)) {
                 token->type = TK_FUN + i;
+                break;
             }
         }
     }
     return token;
 }
 
-token_t *lex_single (char *src, size_t len, cursor_t *crs) {
-    toktype_e type;
+Token *lex_single (char *src, size_t len, Cursor *crs) {
+    TokenType type;
     switch (src[crs->pos]) {
         case '(':
             type = TK_LPAREN;
@@ -88,14 +89,14 @@ token_t *lex_single (char *src, size_t len, cursor_t *crs) {
         default:
             return NULL;
     }
-    token_t *token = token_init(crs, type);
+    Token *token = token_init(crs, type);
     crs->pos++;
     crs->col++;
     return token;
 }
 
 
-token_t *lex_token (char *src, size_t len, cursor_t *crs) {
+Token *lex_token (char *src, size_t len, Cursor *crs) {
     if (!strncmp(src + crs->pos, "//", 2)) {
         return lex_comment(src, len, crs);
     }
@@ -111,18 +112,18 @@ token_t *lex_token (char *src, size_t len, cursor_t *crs) {
     return lex_single(src, len, crs);
 }
 
-token_t *lex_file(char *src, size_t len) {
-    token_t *head = NULL;
-    token_t *tail = NULL;
+Token *lex_file(char *src, size_t len) {
+    Token *head = NULL;
+    Token *tail = NULL;
 
-    cursor_t crs = { 0, 0, 0 };
+    Cursor crs = { 0, 0, 0 };
 
     while (crs.pos < len) {
         while (crs.pos < len && isspace(src[crs.pos])) {
             cursor_advance(src, &crs);
         }
         if (crs.pos == len) break;
-        token_t *token = lex_token(src, len, &crs);
+        Token *token = lex_token(src, len, &crs);
         if (!token) {
             syntax_error(src, &crs);
         }

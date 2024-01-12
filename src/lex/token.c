@@ -11,8 +11,8 @@ const size_t KEYWORDS_CNT = sizeof(KEYWORDS) / sizeof(KEYWORDS[0]);
 
 const size_t KEYWORDS_SZ = sizeof(KEYWORDS);
 
-token_t *token_init(cursor_t *crs, toktype_e type) {
-    token_t *token = (token_t *) malloc(sizeof(token_t));
+Token *token_init(Cursor *crs, TokenType type) {
+    Token *token = (Token *) malloc(sizeof(Token));
     token->type = type;
     token->pos = crs->pos;
     token->row = crs->row;

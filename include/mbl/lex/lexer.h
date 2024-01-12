@@ -9,18 +9,18 @@
 #include "cursor.h"
 #include "token.h"
 
-void syntax_error (char *src, cursor_t *crs);
+void syntax_error (char *src, Cursor *crs);
 
-token_t *lex_token (char *src, size_t len, cursor_t *crs);
+Token *lex_token (char *src, size_t len, Cursor *crs);
 
-token_t *lex_comment (char *src, size_t len, cursor_t *crs);
+Token *lex_comment (char *src, size_t len, Cursor *crs);
 
-token_t *lex_alpha (char *src, size_t len, cursor_t *crs);
+Token *lex_alpha (char *src, size_t len, Cursor *crs);
 
-token_t *lex_digit (char *src, size_t len, cursor_t *crs);
+Token *lex_digit (char *src, size_t len, Cursor *crs);
 
-token_t *lex_single (char *src, size_t len, cursor_t *crs);
+Token *lex_single (char *src, size_t len, Cursor *crs);
 
-token_t *lex_file(char *src, size_t len);
+Token *lex_file(char *src, size_t len);
 
 #endif
