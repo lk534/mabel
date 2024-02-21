@@ -1,9 +1,6 @@
 #include <mbl/lex/lexer.h>
 
-void syntax_error (char *src, Cursor *crs) {
-    printf("[SyntaxError] Unexpected character '%c' (%d) at %d:%d\n", src[crs->pos], src[crs->pos], crs->row, crs->col);
-    exit(1);
-}
+#define syntax_error(src, crs) MBL_TRM("SyntaxError: Unexpected character '%c' (%d) at %d:%d\n", src[crs.pos], src[crs.pos], crs.row, crs.col);
 
 Token *lex_comment (char *src, size_t len, Cursor *crs) {
     Token *token = token_init(crs, TK_COM);
@@ -125,7 +122,7 @@ Token *lex_file(char *src, size_t len) {
         if (crs.pos == len) break;
         Token *token = lex_token(src, len, &crs);
         if (!token) {
-            syntax_error(src, &crs);
+            syntax_error(src, crs);
         }
         if (!head) {
             head = token;

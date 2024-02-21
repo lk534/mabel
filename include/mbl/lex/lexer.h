@@ -6,10 +6,9 @@
 #include <stdio.h>
 #include <ctype.h>
 
+#include "../logger.h"
 #include "cursor.h"
 #include "token.h"
-
-void syntax_error (char *src, Cursor *crs);
 
 Token *lex_token (char *src, size_t len, Cursor *crs);
 

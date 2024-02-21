@@ -3,7 +3,7 @@ MODULES = lex
 
 ############### Make ###############
 CC=gcc
-CFLAGS=-Iinclude -Wall -std=c99 -g
+CFLAGS=-Iinclude -Wall -std=c99 -DMBL_DBG_ENABLE -g
 
 SRC_DIR := $(addprefix src/,$(MODULES)) src
 OBJ_DIR = obj
