@@ -33,6 +33,15 @@ typedef enum {
     TK_COLON
 } TokenType;
 
+typedef enum {
+    TKG_NUL,
+    TKG_GENERAL,
+    TKG_KEYWORDS,
+    TKG_OPERATORS,
+    TKG_LITERALS,
+    TKG_SEPERATORS
+} TokenGroup;
+
 typedef struct _token {
     TokenType type;
     struct _token *next;
@@ -44,5 +53,7 @@ typedef struct _token {
 } Token;
 
 Token *token_init(Cursor *crs, TokenType type);
+
+TokenGroup token_group(TokenType type);
 
 #endif
